@@ -59,7 +59,7 @@ namespace estoquev2
 
             produtos = new List<Produto>();
 
-            do{
+            while(true){
                 Console.WriteLine("Menu do estoque");
                 Console.WriteLine("1 - Adicionar");
                 Console.WriteLine("2 - Remover");
@@ -81,9 +81,12 @@ namespace estoquev2
                         case 3:
                             p.Lst();
                             break;
+                        case 4:
+                            Environment.Exit(1);
+                            break;
                     }
                     Console.Clear();
-            } while (op != 4);
+            }
            
         }
     }
