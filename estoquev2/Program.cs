@@ -10,21 +10,60 @@ namespace estoquev2
         {
             public Produto() { }
 
-            public int id { get; set; }
-            public int quantidade { get; set; }
-            public string nome { get; set; }
-            public string tipo { get; set; }
+            public int Id { get; set; }
+            public int Quantidade { get; set; }
+            public string Nome { get; set; }
+            public string Tipo { get; set; }
 
             public Produto(int id, int quantidade, string nome, string tipo)
             {
-                this.id = id;
-                this.quantidade = quantidade;
-                this.nome = nome;
-                this.tipo = tipo;
+                this.Id = id;
+                this.Quantidade = quantidade;
+                this.Nome = nome;
+                this.Tipo = tipo;
             }
         }
 
         static List<Produto> produtos;
+
+        private static bool Menu()
+        {
+            Console.Clear();
+            Console.WriteLine("Menu do estoque");
+            Console.WriteLine("1 - Adicionar");
+            Console.WriteLine("2 - Remover");
+            Console.WriteLine("3 - Consultar");
+            Console.WriteLine("4 - Sair");
+            Console.WriteLine("Escolha uma opção: ");
+
+            string line = Console.ReadLine();
+            if (!int.TryParse(line, out int op))
+            {
+                Console.WriteLine("Opção inválida.");
+                Console.Read();
+            }
+
+            Program p = new Program();
+
+            switch (op)
+            {
+                case 1:
+                    p.Add();
+                    return true;
+                case 2:
+                    p.Rem();
+                    return true;
+                case 3:
+                    p.Lst();
+                    Console.WriteLine("Pressione espaço para continuar. ");
+                    Console.ReadKey();
+                    return true;
+                case 4:
+                    return false;
+                default:
+                    return true;
+            }
+        }
 
         public void Add()
         {
@@ -47,46 +86,20 @@ namespace estoquev2
         {
             foreach(Produto p in produtos)
             {
-                Console.WriteLine("ID " + p.id + "|Nome "+p.nome + "|Tipo " + p.tipo+"|Quantidade "+p.quantidade);
-                Console.Read();
+                Console.WriteLine("ID " + p.Id + "|Nome "+p.Nome + "|Tipo " + p.Tipo+"|Quantidade "+p.Quantidade);
             }
         }
 
         static void Main(string[] args)
         {
 
-            int op;
-
             produtos = new List<Produto>();
 
-            while(true){
-                Console.WriteLine("Menu do estoque");
-                Console.WriteLine("1 - Adicionar");
-                Console.WriteLine("2 - Remover");
-                Console.WriteLine("3 - Consultar");
-                Console.WriteLine("4 - Sair");
-
-                op = int.Parse(Console.ReadLine());
-
-                Program p = new Program();
-
-                    switch (op)
-                    {
-                        case 1:
-                            p.Add();
-                            break;
-                        case 2:
-                            p.Rem();
-                            break;
-                        case 3:
-                            p.Lst();
-                            break;
-                        case 4:
-                            Environment.Exit(1);
-                            break;
-                    }
-                    Console.Clear();
+            bool menu = true;
+            while (menu){
+                menu = Menu();
             }
+            Environment.Exit(1);
            
         }
     }
