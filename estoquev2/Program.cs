@@ -5,19 +5,17 @@ namespace estoquev2
 {
     class Program
     {
-        int ids = 1;
+
         public class Produto
         {
             public Produto() { }
 
-            public int Id { get; set; }
             public int Quantidade { get; set; }
             public string Nome { get; set; }
             public string Tipo { get; set; }
 
-            public Produto(int id, int quantidade, string nome, string tipo)
+            public Produto(int quantidade, string nome, string tipo)
             {
-                this.Id = id;
                 this.Quantidade = quantidade;
                 this.Nome = nome;
                 this.Tipo = tipo;
@@ -26,7 +24,7 @@ namespace estoquev2
 
         static List<Produto> produtos;
 
-        private static bool Menu()
+        public static bool Menu()
         {
             Console.Clear();
             Console.WriteLine("Menu do estoque");
@@ -55,7 +53,7 @@ namespace estoquev2
                     return true;
                 case 3:
                     p.Lst();
-                    Console.WriteLine("Pressione espaço para continuar. ");
+                    Console.WriteLine("Pressione uma tecla para continuar. ");
                     Console.ReadKey();
                     return true;
                 case 4:
@@ -67,34 +65,48 @@ namespace estoquev2
 
         public void Add()
         {
-            int id = ids;
             Console.WriteLine("Insira o nome: ");
             string nome = Console.ReadLine();
             Console.WriteLine("Insira o tipo: ");
             string tipo = Console.ReadLine();
             Console.WriteLine("Insira a quantidade: ");
             int quantidade = int.Parse(Console.ReadLine());
-            produtos.Add(new Produto(id, quantidade, nome, tipo));
+            produtos.Add(new Produto(quantidade, nome, tipo));
         }
 
         public void Rem()
         {
+            Console.WriteLine("Insira o ID do produto que deseja remover: ");
+            int remover= int.Parse(Console.ReadLine());
+            try
+            {
+                produtos.RemoveAt(remover);
+                Console.WriteLine(remover + " removido.");
+                Console.WriteLine("Pressione uma tecla para continuar. ");
+                Console.ReadKey();
+            }
+            catch (System.ArgumentOutOfRangeException) {
+                Console.WriteLine("Operação inválida. ");
+                Console.WriteLine("Pressione uma tecla para continuar. ");
+                Console.ReadKey();
 
+            }
         }
 
         public void Lst()
         {
             foreach(Produto p in produtos)
             {
-                Console.WriteLine("ID " + p.Id + "|Nome "+p.Nome + "|Tipo " + p.Tipo+"|Quantidade "+p.Quantidade);
+                int id = produtos.IndexOf(p);
+                Console.WriteLine("ID " + id + "|Nome "+p.Nome + "|Tipo " + p.Tipo+"|Quantidade "+p.Quantidade);
             }
         }
 
-        static void Main(string[] args)
+        static void Main()
         {
 
             produtos = new List<Produto>();
-
+            
             bool menu = true;
             while (menu){
                 menu = Menu();
